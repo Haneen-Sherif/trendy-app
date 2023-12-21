@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_commerce_app/Features/home/presentation/manager/cart_cubit/cart_cubit.dart';
 import 'package:e_commerce_app/Features/home/presentation/views/product_details_view.dart';
+import 'package:e_commerce_app/Features/home/presentation/views/widgets/check_out_total_price.dart';
 import 'package:e_commerce_app/constants.dart';
 import 'package:e_commerce_app/core/utils/widgets/custom_app_bar.dart';
 import 'package:e_commerce_app/core/utils/widgets/custom_drawer.dart';
@@ -57,26 +58,29 @@ class CheckoutView extends StatelessWidget {
                                         BlocProvider.of<CartCubit>(context)
                                             .selectedProducts[index]['image']
                                             .toString())),
-                                title: Text(BlocProvider.of<CartCubit>(context)
-                                    .selectedProducts[index]['title']
-                                    .toString()),
+                                title: Text(
+                                  BlocProvider.of<CartCubit>(context)
+                                      .selectedProducts[index]['title']
+                                      .toString(),
+                                ),
                               ),
                               Positioned(
                                 right: 0,
                                 bottom: 10,
                                 child: IconButton(
-                                    onPressed: () {
-                                      try {
-                                        BlocProvider.of<CartCubit>(context)
-                                            .removeProduct(product);
-                                      } catch (e) {
-                                        print(e);
-                                      }
-                                    },
-                                    icon: const Icon(
-                                      Icons.remove,
-                                      color: kSecondaryColor,
-                                    )),
+                                  onPressed: () {
+                                    try {
+                                      BlocProvider.of<CartCubit>(context)
+                                          .removeProduct(product);
+                                    } catch (e) {
+                                      print(e);
+                                    }
+                                  },
+                                  icon: const Icon(
+                                    Icons.remove,
+                                    color: kSecondaryColor,
+                                  ),
+                                ),
                               ),
                             ],
                           ),
@@ -85,12 +89,7 @@ class CheckoutView extends StatelessWidget {
                     },
                   ),
                 ),
-                Text(
-                    "Total: ${BlocProvider.of<CartCubit>(context).price.round().toString()}\$",
-                    style: const TextStyle(
-                        color: kPrimaryColor,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16)),
+                const CheckOutTotalPrice(),
               ],
             ),
           ),
@@ -99,3 +98,5 @@ class CheckoutView extends StatelessWidget {
     );
   }
 }
+
+

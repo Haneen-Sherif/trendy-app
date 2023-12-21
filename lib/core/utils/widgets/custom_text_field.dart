@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
 
 class CustomTextField extends StatelessWidget {
-  CustomTextField(
-      {super.key,
-      required this.title,
-      this.icon,
-      required this.controller,
-      required this.validator,
-      required this.keyboardType,
-      this.obscureText = false,
-      required this.textInputAction,
-      this.onFieldSubmitted});
+  CustomTextField({
+    super.key,
+    required this.title,
+    this.icon,
+    required this.controller,
+    required this.validator,
+    required this.keyboardType,
+    this.obscureText = false,
+    required this.textInputAction,
+    this.onFieldSubmitted,
+  });
 
   final String title;
   final Widget? icon;
@@ -30,7 +31,10 @@ class CustomTextField extends StatelessWidget {
       keyboardType: TextInputType.emailAddress,
       controller: controller,
       validator: validator,
-      decoration: InputDecoration(labelText: title, suffixIcon: icon),
+      decoration: InputDecoration(
+        labelText: title,
+        suffixIcon: icon,
+      ),
     );
   }
 }

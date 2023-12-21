@@ -28,7 +28,11 @@ class SkipOrNextBottomSheet extends StatelessWidget {
               ),
             ),
             onPressed: () {
-              controller.jumpToPage(2);
+              controller.animateToPage(
+                2,
+                duration: const Duration(milliseconds: 500),
+                curve: Curves.easeInOut,
+              );
             },
           ),
           SmoothPageIndicator(

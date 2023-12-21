@@ -11,6 +11,18 @@ class CartCubit extends Cubit<CartState> {
   List selectedProducts = [];
   double price = 0;
 
+  Map itemQuantity(item) {
+    var quantity = {};
+    for (var element in selectedProducts) {
+      if (!quantity.containsKey(element)) {
+        quantity[element] = 1;
+      } else {
+        quantity[element] += 1;
+      }
+    }
+    return quantity;
+  }
+
   addProduct(DocumentSnapshot product) {
     selectedProducts.add(product);
     price += product['price'];

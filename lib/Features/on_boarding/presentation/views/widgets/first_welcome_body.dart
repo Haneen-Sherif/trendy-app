@@ -15,10 +15,11 @@ class FirstWelcomeBody extends StatelessWidget {
           padding: EdgeInsets.all(32),
           child: Center(
             child: OnBoardingBody(
-                height: 400,
-                imgPath: "assets/images/o1.jpg",
-                title: "Discover",
-                supTitle: "Explore world top brands and boutiques"),
+              height: 400,
+              imgPath: "assets/images/o1.jpg",
+              title: "Discover",
+              supTitle: "Explore world top brands and boutiques",
+            ),
           ),
         ),
       ],

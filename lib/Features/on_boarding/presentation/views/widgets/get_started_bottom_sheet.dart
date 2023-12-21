@@ -1,5 +1,6 @@
 import 'package:e_commerce_app/Features/authentication/presentation/views/register_view.dart';
 import 'package:e_commerce_app/constants.dart';
+import 'package:e_commerce_app/core/utils/widgets/custom_auth_route.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -21,10 +22,11 @@ class GetStartedBottomSheet extends StatelessWidget {
       onPressed: () async {
         final prefs = await SharedPreferences.getInstance();
         prefs.setBool("showRegister", true);
-        Navigator.push(
+        Navigator.pushReplacement(
           context,
-          MaterialPageRoute(
-            builder: (context) => const RegisterView(),
+          CustomAuthRoute(
+            page: RegisterView(),
+            transitionDuration: const Duration(seconds: 1),
           ),
         );
       },

@@ -28,7 +28,9 @@ class _ProfileViewState extends State<ProfileView> {
   @override
   Widget build(BuildContext context) {
     TextEditingController? email =
-        BlocProvider.of<AuthCubit>(context).emailController;
+        BlocProvider
+            .of<AuthCubit>(context)
+            .emailController;
     return SingleChildScrollView(
       physics: const BouncingScrollPhysics(),
       child: Padding(

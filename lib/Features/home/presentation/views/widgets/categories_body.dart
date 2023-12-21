@@ -16,10 +16,11 @@ class CategoriesBody extends StatelessWidget {
         GestureDetector(
           onTap: () {
             Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const ElectronicsCategory(),
-                ));
+              context,
+              MaterialPageRoute(
+                builder: (context) => const ElectronicsCategory(),
+              ),
+            );
           },
           child: const ListTile(
             title: Text("Electronics"),
@@ -32,10 +33,11 @@ class CategoriesBody extends StatelessWidget {
         GestureDetector(
           onTap: () {
             Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const JeweleryCategory(),
-                ));
+              context,
+              MaterialPageRoute(
+                builder: (context) => const JeweleryCategory(),
+              ),
+            );
           },
           child: const ListTile(
             title: Text("Jewelery"),
@@ -48,10 +50,11 @@ class CategoriesBody extends StatelessWidget {
         GestureDetector(
           onTap: () {
             Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const MenClothingCategory(),
-                ));
+              context,
+              MaterialPageRoute(
+                builder: (context) => const MenClothingCategory(),
+              ),
+            );
           },
           child: const ListTile(
             title: Text("Men's clothing"),
@@ -64,16 +67,20 @@ class CategoriesBody extends StatelessWidget {
         GestureDetector(
           onTap: () {
             Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const WomenClothingCategory(),
-                ));
+              context,
+              MaterialPageRoute(
+                builder: (context) => const WomenClothingCategory(),
+              ),
+            );
           },
           child: const ListTile(
             title: Text("Women's clothing"),
             trailing: Padding(
               padding: EdgeInsets.only(right: 12),
-              child: Icon(FontAwesomeIcons.arrowRight, color: kPrimaryColor),
+              child: Icon(
+                FontAwesomeIcons.arrowRight,
+                color: kPrimaryColor,
+              ),
             ),
           ),
         ),

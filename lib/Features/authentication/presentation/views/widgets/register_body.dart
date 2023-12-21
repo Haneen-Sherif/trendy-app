@@ -2,6 +2,7 @@ import 'package:e_commerce_app/Features/authentication/presentation/manager/auth
 import 'package:e_commerce_app/Features/authentication/presentation/views/login_view.dart';
 import 'package:e_commerce_app/Features/home/presentation/views/home_layout_view/home_layout.dart';
 import 'package:e_commerce_app/core/utils/styles.dart';
+import 'package:e_commerce_app/core/utils/widgets/custom_auth_route.dart';
 import 'package:e_commerce_app/core/utils/widgets/custom_button.dart';
 import 'package:e_commerce_app/core/utils/widgets/custom_text_field.dart';
 import 'package:flutter/material.dart';
@@ -30,11 +31,12 @@ class _RegisterBodyState extends State<RegisterBody> {
       child: BlocListener<AuthCubit, AuthState>(
         listener: (context, state) {
           if (state is AuthSuccess) {
-            Navigator.push(
+            Navigator.pushAndRemoveUntil(
               context,
               MaterialPageRoute(
                 builder: (context) => const HomeLayout(),
               ),
+              (Route<dynamic> route) => false,
             );
           } else if (state is AuthFailure) {
             showSnackBar(context, state.errMessage);
@@ -50,14 +52,20 @@ class _RegisterBodyState extends State<RegisterBody> {
               ),
               const Text(
                 "Sign up",
-                style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
+                style: TextStyle(
+                  fontSize: 32,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
               const SizedBox(
                 height: 8,
               ),
               const Text(
                 "Please register to our app",
-                style: TextStyle(fontSize: 14, color: Colors.grey),
+                style: TextStyle(
+                  fontSize: 14,
+                  color: Colors.grey,
+                ),
               ),
               const SizedBox(
                 height: 18,
@@ -81,31 +89,33 @@ class _RegisterBodyState extends State<RegisterBody> {
                 ),
               ),
               SizedBox(
-                  width: 200,
-                  child: CustomTextField(
-                    onFieldSubmitted: (p0) {},
-                    icon: IconButton(
-                        onPressed: () {
-                          setState(() {
-                            visible = !visible;
-                          });
-                        },
-                        icon: !visible
-                            ? const Icon(Icons.remove_red_eye)
-                            : const Icon(Icons.visibility_off)),
-                    textInputAction: TextInputAction.done,
-                    obscureText: visible,
-                    keyboardType: TextInputType.text,
-                    title: "Password",
-                    controller: passwordController,
-                    validator: (p0) {
-                      if (p0!.isEmpty) {
-                        return "Password must not be empty";
-                      } else {
-                        return null;
-                      }
+                width: 200,
+                child: CustomTextField(
+                  onFieldSubmitted: (p0) {},
+                  icon: IconButton(
+                    onPressed: () {
+                      setState(() {
+                        visible = !visible;
+                      });
                     },
-                  )),
+                    icon: !visible
+                        ? const Icon(Icons.remove_red_eye)
+                        : const Icon(Icons.visibility_off),
+                  ),
+                  textInputAction: TextInputAction.done,
+                  obscureText: visible,
+                  keyboardType: TextInputType.text,
+                  title: "Password",
+                  controller: passwordController,
+                  validator: (p0) {
+                    if (p0!.isEmpty) {
+                      return "Password must not be empty";
+                    } else {
+                      return null;
+                    }
+                  },
+                ),
+              ),
               const SizedBox(
                 height: 8,
               ),
@@ -114,21 +124,27 @@ class _RegisterBodyState extends State<RegisterBody> {
                 children: [
                   const Text(
                     "Already have an account? ",
-                    style: TextStyle(color: Colors.grey, fontSize: 12),
+                    style: TextStyle(
+                      color: Colors.grey,
+                      fontSize: 12,
+                    ),
                   ),
                   GestureDetector(
                     onTap: () {
                       Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const LoginView(),
-                          ));
+                        context,
+                        CustomAuthRoute(
+                          page: const LoginView(),
+                          transitionDuration: const Duration(seconds: 1),
+                        ),
+                      );
                     },
                     child: const Text(
                       "Login",
                       style: TextStyle(
-                          color: Color(0xff05445E),
-                          fontWeight: FontWeight.bold),
+                        color: Color(0xff05445E),
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
                 ],

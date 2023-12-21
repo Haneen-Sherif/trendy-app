@@ -1,16 +1,19 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_commerce_app/Features/home/presentation/manager/cart_cubit/cart_cubit.dart';
-import 'package:e_commerce_app/Features/home/presentation/views/checkout_view.dart';
+import 'package:e_commerce_app/Features/home/presentation/views/widgets/custom_floating_button_cart.dart';
+import 'package:e_commerce_app/Features/home/presentation/views/widgets/custom_product_details_button.dart';
 import 'package:e_commerce_app/constants.dart';
 import 'package:e_commerce_app/core/utils/styles.dart';
-import 'package:e_commerce_app/core/utils/widgets/nomber_of_purchases.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class ProductDetailsView extends StatefulWidget {
-  const ProductDetailsView({Key? key, required this.product}) : super(key: key);
+  const ProductDetailsView({
+    Key? key,
+    required this.product,
+  }) : super(key: key);
   final DocumentSnapshot product;
 
   @override
@@ -29,28 +32,7 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: Stack(
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(right: 8),
-            child: IconButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) {
-                        return const CheckoutView();
-                      },
-                    ),
-                  );
-                },
-                icon: const Icon(
-                  FontAwesomeIcons.cartPlus,
-                )),
-          ),
-          const NumberOfPurchases(),
-        ],
-      ),
+      floatingActionButton: const CustomFloatingButtonCart(),
       body: SafeArea(
         child: SizedBox(
           height: MediaQuery.of(context).size.height,
@@ -66,7 +48,9 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
                       height: 200,
                       width: MediaQuery.of(context).size.width,
                       child: Image(
-                        image: AssetImage(widget.product['image']),
+                        image: AssetImage(
+                          widget.product['image'],
+                        ),
                         fit: BoxFit.cover,
                       ),
                     ),
@@ -75,26 +59,28 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
                       child: Row(
                         children: [
                           ElevatedButton(
-                              onPressed: () {
-                                Navigator.pop(context);
-                              },
-                              style: iconStyle(),
-                              child: const Icon(
-                                Icons.arrow_back,
-                                color: kSecondaryColor,
-                              )),
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                            style: iconStyle(),
+                            child: const Icon(
+                              Icons.arrow_back,
+                              color: kSecondaryColor,
+                            ),
+                          ),
                           const Spacer(),
                           ElevatedButton(
-                              onPressed: () {
-                                setState(() {
-                                  change = !change;
-                                });
-                              },
-                              style: iconStyle(),
-                              child: Icon(
-                                change ? Icons.favorite_border : Icons.favorite,
-                                color: kSecondaryColor,
-                              )),
+                            onPressed: () {
+                              setState(() {
+                                change = !change;
+                              });
+                            },
+                            style: iconStyle(),
+                            child: Icon(
+                              change ? Icons.favorite_border : Icons.favorite,
+                              color: kSecondaryColor,
+                            ),
+                          ),
                         ],
                       ),
                     )
@@ -108,7 +94,9 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
                       Text(
                         "${widget.product['title'].toString()}  ${widget.product['price']}\$",
                         style: const TextStyle(
-                            fontSize: 25, fontWeight: FontWeight.bold),
+                          fontSize: 25,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                       const SizedBox(
                         height: 10,
@@ -118,9 +106,10 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
                           Text(
                             widget.product['rate'].toString(),
                             style: TextStyle(
-                                fontSize: 18,
-                                color: Colors.black87.withOpacity(0.8),
-                                fontWeight: FontWeight.bold),
+                              fontSize: 18,
+                              color: Colors.black87.withOpacity(0.8),
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                           const Icon(
                             Icons.star,
@@ -133,9 +122,10 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
                           Text(
                             widget.product['category'],
                             style: TextStyle(
-                                fontSize: 18,
-                                color: Colors.black87.withOpacity(0.8),
-                                fontWeight: FontWeight.bold),
+                              fontSize: 18,
+                              color: Colors.black87.withOpacity(0.8),
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                           const SizedBox(
                             width: 10,
@@ -146,72 +136,53 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
                         height: 20,
                       ),
                       SizedBox(
-                          width: MediaQuery.of(context).size.width,
-                          child: ElevatedButton(
-                            onPressed: () {
-                              BlocProvider.of<CartCubit>(context)
-                                  .addProduct(widget.product);
-                            },
-                            style: ElevatedButton.styleFrom(
-                                backgroundColor: const Color(0xfff8c210),
-                                elevation: 0,
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(50))),
-                            child: const Row(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Icon(
-                                  FontAwesomeIcons.cartPlus,
-                                  size: 16,
-                                  color: Colors.white,
-                                ),
-                                SizedBox(
-                                  width: 10,
-                                ),
-                                Text(
-                                  'Add to cart',
-                                  style: TextStyle(color: Colors.white),
-                                ),
-                              ],
+                        width: MediaQuery.of(context).size.width,
+                        child: ElevatedButton(
+                          onPressed: () {
+                            BlocProvider.of<CartCubit>(context)
+                                .addProduct(widget.product);
+                          },
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: const Color(0xfff8c210),
+                            elevation: 0,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(50),
                             ),
-                          )),
+                          ),
+                          child: const CustomProductDetailsButton(
+                            icon: FontAwesomeIcons.cartPlus,
+                            text: 'Add to cart',
+                          ),
+                        ),
+                      ),
                       SizedBox(
-                          width: MediaQuery.of(context).size.width,
-                          child: ElevatedButton(
-                            onPressed: () {
-                              _showModalBottomSheet(context);
-                            },
-                            style: ElevatedButton.styleFrom(
-                                backgroundColor: const Color(0xffDA4C2D),
-                                elevation: 0,
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(50))),
-                            child: const Row(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Icon(
-                                  Icons.star_outline_outlined,
-                                  color: Colors.white,
-                                ),
-                                SizedBox(
-                                  width: 10,
-                                ),
-                                Text(
-                                  'Rate',
-                                  style: TextStyle(color: Colors.white),
-                                ),
-                              ],
+                        width: MediaQuery.of(context).size.width,
+                        child: ElevatedButton(
+                          onPressed: () {
+                            _showModalBottomSheet(context);
+                          },
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: const Color(0xffDA4C2D),
+                            elevation: 0,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(50),
                             ),
-                          )),
+                          ),
+                          child: const CustomProductDetailsButton(
+                            icon: Icons.star_outline_outlined,
+                            text: 'Rate',
+                          ),
+                        ),
+                      ),
                       const SizedBox(
                         height: 20,
                       ),
                       const Text(
                         'Description',
                         style: TextStyle(
-                            fontSize: 25, fontWeight: FontWeight.bold),
+                          fontSize: 25,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                       const SizedBox(
                         height: 10,
@@ -219,8 +190,9 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
                       Text(
                         widget.product['description'],
                         style: TextStyle(
-                            fontSize: 18,
-                            color: Colors.black87.withOpacity(0.8)),
+                          fontSize: 18,
+                          color: Colors.black87.withOpacity(0.8),
+                        ),
                       ),
                     ],
                   ),
@@ -268,8 +240,9 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
                         //height: 7,
                         width: 200,
                         decoration: BoxDecoration(
-                            color: Colors.grey[300],
-                            borderRadius: BorderRadius.circular(10)),
+                          color: Colors.grey[300],
+                          borderRadius: BorderRadius.circular(10),
+                        ),
                       ),
                       // rating bar
                       Padding(
@@ -316,22 +289,27 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
                       ),
                       // submit button that close the bottom sheet
                       SizedBox(
-                          width: MediaQuery.of(context).size.width * .5,
-                          child: ElevatedButton(
-                            onPressed: () {
-                              Navigator.pop(context);
-                            },
-                            style: ElevatedButton.styleFrom(
-                                backgroundColor: Colors.green,
-                                elevation: 0,
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(50))),
-                            child: const Text(
-                              'Submit',
-                              style:
-                                  TextStyle(color: Colors.white, fontSize: 20),
+                        width: MediaQuery.of(context).size.width * .5,
+                        child: ElevatedButton(
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.green,
+                            elevation: 0,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(50),
                             ),
-                          )),
+                          ),
+                          child: const Text(
+                            'Submit',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 20,
+                            ),
+                          ),
+                        ),
+                      ),
                     ],
                   ),
                 ),

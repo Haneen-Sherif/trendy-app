@@ -19,8 +19,9 @@ class NumberOfPurchases extends StatelessWidget {
             radius: 10,
             child: Center(
               child: Text(
-                  "${BlocProvider.of<CartCubit>(context).selectedProducts.length}",
-                  style: const TextStyle(fontSize: 12)),
+                "${BlocProvider.of<CartCubit>(context).selectedProducts.length}",
+                style: const TextStyle(fontSize: 12),
+              ),
             ),
           ),
         );

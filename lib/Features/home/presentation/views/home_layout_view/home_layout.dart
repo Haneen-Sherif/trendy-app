@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:e_commerce_app/Features/home/presentation/views/home_layout_view/categories_view.dart';
 import 'package:e_commerce_app/Features/home/presentation/views/home_layout_view/home_view.dart';
 import 'package:e_commerce_app/Features/home/presentation/views/home_layout_view/profile_view.dart';
@@ -21,26 +22,77 @@ class _HomeLayoutState extends State<HomeLayout> {
     const CategoriesView()
   ];
 
+  Future<bool> _onWillPop() async {
+    return (await showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+            title: const Text(
+              'Exit App',
+              textAlign: TextAlign.center,
+              style: TextStyle(color: Colors.red), // Danger mode text color
+            ),
+            content: const Text(
+              'Are you sure you want to exit the app?',
+            ),
+            actions: <Widget>[
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  ElevatedButton(
+                    onPressed: () => Navigator.of(context).pop(false),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.green,
+                    ),
+                    child: const Text('No'),
+                  ),
+                  ElevatedButton(
+                    onPressed: () => exit(0),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: const Color(0xffDA4C2D),
+                    ),
+                    child: const Text(
+                      'Yes',
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  ),
+                ],
+              )
+            ],
+          ),
+        )) ??
+        false;
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      drawer: const CustomDrawer(),
-      appBar: const CustomAppBar(title: "Trendy"),
-      body: views[currentIndex],
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: currentIndex,
-        onTap: (value) {
-          setState(() {});
-          currentIndex = value;
-        },
-        items: const [
-          BottomNavigationBarItem(
-              icon: Icon(FontAwesomeIcons.house), label: "Home"),
-          BottomNavigationBarItem(
-              icon: Icon(FontAwesomeIcons.user), label: "Profile"),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.category), label: "Categories"),
-        ],
+    return WillPopScope(
+      onWillPop: _onWillPop,
+      child: Scaffold(
+        drawer: const CustomDrawer(),
+        appBar: const CustomAppBar(title: "Trendy"),
+        body: views[currentIndex],
+        bottomNavigationBar: BottomNavigationBar(
+          currentIndex: currentIndex,
+          onTap: (value) {
+            setState(() {
+              currentIndex = value;
+            });
+          },
+          items: const [
+            BottomNavigationBarItem(
+              icon: Icon(FontAwesomeIcons.house),
+              label: "Home",
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(FontAwesomeIcons.user),
+              label: "Profile",
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.category),
+              label: "Categories",
+            ),
+          ],
+        ),
       ),
     );
   }

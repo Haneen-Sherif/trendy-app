@@ -48,7 +48,11 @@ MaterialColor myColor = MaterialColor(
 );
 
 void showSnackBar(BuildContext context, String message) {
-  ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(message)));
+  ScaffoldMessenger.of(context).showSnackBar(
+    SnackBar(
+      content: Text(message),
+    ),
+  );
 }
 
 SliverGridDelegateWithFixedCrossAxisCount gridViewStyle() {
@@ -61,14 +65,16 @@ SliverGridDelegateWithFixedCrossAxisCount gridViewStyle() {
 }
 
 BoxDecoration buildCardBoxDecoration() {
-  return BoxDecoration(boxShadow: [
-    BoxShadow(
-      blurRadius: 50,
-      color: Colors.grey.withOpacity(.1),
-      spreadRadius: 20,
-      offset: const Offset(10, 10),
-    ),
-  ]);
+  return BoxDecoration(
+    boxShadow: [
+      BoxShadow(
+        blurRadius: 50,
+        color: Colors.grey.withOpacity(.1),
+        spreadRadius: 20,
+        offset: const Offset(10, 10),
+      ),
+    ],
+  );
 }
 
 ButtonStyle iconStyle() {

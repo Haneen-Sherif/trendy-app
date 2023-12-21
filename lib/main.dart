@@ -20,7 +20,10 @@ Future<void> main() async {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key, required this.showRegister});
+  const MyApp({
+    super.key,
+    required this.showRegister,
+  });
 
   final bool showRegister;
 
@@ -38,7 +41,10 @@ class MyApp extends StatelessWidget {
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        theme: ThemeData(fontFamily: "Poppins", primarySwatch: myColor),
+        theme: ThemeData(
+          fontFamily: "Poppins",
+          primarySwatch: myColor,
+        ),
         //home: const AboutMeAndMyProject(),
         home: showRegister ? const RegisterView() : const OnBoardingView(),
       ),

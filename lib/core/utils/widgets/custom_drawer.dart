@@ -33,28 +33,37 @@ class _CustomDrawerState extends State<CustomDrawer> {
       child: Column(
         children: [
           UserAccountsDrawerHeader(
-              currentAccountPicture: CircleAvatar(
-                backgroundColor: Colors.grey[200],
-                backgroundImage: const AssetImage('assets/images/user.png'),
-              ),
-              decoration: const BoxDecoration(color: kPrimaryColor),
-              accountName: const Text("Welcome"),
-              accountEmail: Text(signedInUser.email.toString())),
+            currentAccountPicture: CircleAvatar(
+              backgroundColor: Colors.grey[200],
+              backgroundImage: const AssetImage('assets/images/user.png'),
+            ),
+            decoration: const BoxDecoration(color: kPrimaryColor),
+            accountName: const Text("Welcome"),
+            accountEmail: Text(
+              signedInUser.email.toString(),
+            ),
+          ),
           ListTile(
             title: const Text("Home"),
-            leading: const Icon(FontAwesomeIcons.house, color: kPrimaryColor),
+            leading: const Icon(
+              FontAwesomeIcons.house,
+              color: kPrimaryColor,
+            ),
             onTap: () {
               Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const HomeLayout(),
-                  ));
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const HomeLayout(),
+                ),
+              );
             },
           ),
           ListTile(
             title: const Text("Purchases"),
-            leading:
-                const Icon(FontAwesomeIcons.cartPlus, color: kPrimaryColor),
+            leading: const Icon(
+              FontAwesomeIcons.cartPlus,
+              color: kPrimaryColor,
+            ),
             onTap: () {
               Navigator.push(
                 context,
@@ -83,8 +92,10 @@ class _CustomDrawerState extends State<CustomDrawer> {
           ),
           ListTile(
             title: const Text("About"),
-            leading:
-            const Icon(FontAwesomeIcons.addressCard, color: kPrimaryColor),
+            leading: const Icon(
+              FontAwesomeIcons.addressCard,
+              color: kPrimaryColor,
+            ),
             onTap: () {
               Navigator.push(
                 context,

@@ -4,7 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
-  const CustomAppBar({Key? key, required this.title}) : super(key: key);
+  const CustomAppBar({
+    Key? key,
+    required this.title,
+  }) : super(key: key);
   final String title;
 
   @override

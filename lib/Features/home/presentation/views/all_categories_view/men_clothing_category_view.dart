@@ -16,7 +16,11 @@ class MenClothingCategory extends StatelessWidget {
     return Scaffold(
       appBar: const CustomAppBar(title: "Men's clothing"),
       body: Padding(
-        padding: const EdgeInsets.only(left: 16, right: 16, top: 90),
+        padding: const EdgeInsets.only(
+          left: 16,
+          right: 16,
+          top: 90,
+        ),
         child: StreamBuilder(
           stream: FirebaseFirestore.instance
               .collection("products")
@@ -25,13 +29,14 @@ class MenClothingCategory extends StatelessWidget {
           builder: (context, snapshot) {
             try {
               return GridView.builder(
-                  physics: const BouncingScrollPhysics(),
-                  itemCount: snapshot.data!.docs.length,
-                  clipBehavior: Clip.none,
-                  gridDelegate: gridViewStyle(),
-                  itemBuilder: (context, index) {
-                    DocumentSnapshot product = snapshot.data!.docs[index];
-                    return GestureDetector(onTap: () {
+                physics: const BouncingScrollPhysics(),
+                itemCount: snapshot.data!.docs.length,
+                clipBehavior: Clip.none,
+                gridDelegate: gridViewStyle(),
+                itemBuilder: (context, index) {
+                  DocumentSnapshot product = snapshot.data!.docs[index];
+                  return GestureDetector(
+                    onTap: () {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
@@ -40,20 +45,23 @@ class MenClothingCategory extends StatelessWidget {
                           ),
                         ),
                       );
-                    }, child: BlocBuilder<CartCubit, CartState>(
+                    },
+                    child: BlocBuilder<CartCubit, CartState>(
                       builder: (context, state) {
                         return Stack(
                           clipBehavior: Clip.none,
                           children: [
                             Container(
-                              decoration: BoxDecoration(boxShadow: [
-                                BoxShadow(
-                                  blurRadius: 50,
-                                  color: Colors.grey.withOpacity(.1),
-                                  spreadRadius: 20,
-                                  offset: const Offset(10, 10),
-                                ),
-                              ]),
+                              decoration: BoxDecoration(
+                                boxShadow: [
+                                  BoxShadow(
+                                    blurRadius: 50,
+                                    color: Colors.grey.withOpacity(.1),
+                                    spreadRadius: 20,
+                                    offset: const Offset(10, 10),
+                                  ),
+                                ],
+                              ),
                               child: Card(
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(8),
@@ -123,20 +131,23 @@ class MenClothingCategory extends StatelessWidget {
                               bottom: 10,
                               right: 0,
                               child: IconButton(
-                                  onPressed: () {
-                                    BlocProvider.of<CartCubit>(context)
-                                        .addProduct(product);
-                                  },
-                                  icon: const Icon(
-                                    Icons.add,
-                                    color: kSecondaryColor,
-                                  )),
+                                onPressed: () {
+                                  BlocProvider.of<CartCubit>(context)
+                                      .addProduct(product);
+                                },
+                                icon: const Icon(
+                                  Icons.add,
+                                  color: kSecondaryColor,
+                                ),
+                              ),
                             ),
                           ],
                         );
                       },
-                    ));
-                  });
+                    ),
+                  );
+                },
+              );
             } catch (e) {
               return const CustomLoadingIndicator();
             }

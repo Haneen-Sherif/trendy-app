@@ -21,16 +21,20 @@ class CustomButton extends StatelessWidget {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(50),
           gradient: const LinearGradient(
-              begin: Alignment.centerLeft,
-              end: Alignment.centerRight,
-              colors: myColors),
+            begin: Alignment.centerLeft,
+            end: Alignment.centerRight,
+            colors: myColors,
+          ),
         ),
         child: Padding(
           padding: const EdgeInsets.all(14),
           child: Text(
             text,
             style: const TextStyle(
-                color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),
+              color: Colors.white,
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+            ),
           ),
         ),
       ),

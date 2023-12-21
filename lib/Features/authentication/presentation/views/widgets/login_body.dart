@@ -3,6 +3,7 @@ import 'package:e_commerce_app/Features/authentication/presentation/views/regist
 import 'package:e_commerce_app/Features/home/presentation/views/home_layout_view/home_layout.dart';
 import 'package:e_commerce_app/constants.dart';
 import 'package:e_commerce_app/core/utils/styles.dart';
+import 'package:e_commerce_app/core/utils/widgets/custom_auth_route.dart';
 import 'package:e_commerce_app/core/utils/widgets/custom_button.dart';
 import 'package:e_commerce_app/core/utils/widgets/custom_text_field.dart';
 import 'package:flutter/material.dart';
@@ -18,8 +19,23 @@ class LoginBody extends StatefulWidget {
 
 class _LoginBodyState extends State<LoginBody> {
   bool visible = true;
-  TextEditingController emailController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
+  late TextEditingController emailController;
+  late TextEditingController passwordController;
+
+  @override
+  void initState() {
+    emailController = TextEditingController();
+    passwordController = TextEditingController();
+    super.initState();
+  }
+
+  @override
+  void deactivate() {
+    emailController.dispose();
+    passwordController.dispose();
+    super.deactivate();
+  }
+
   var formKey = GlobalKey<FormState>();
 
   @override
@@ -38,7 +54,10 @@ class _LoginBodyState extends State<LoginBody> {
               ),
             );
           } else if (state is AuthFailure) {
-            showSnackBar(context, state.errMessage);
+            showSnackBar(
+              context,
+              state.errMessage,
+            );
           }
         },
         child: Form(
@@ -51,14 +70,20 @@ class _LoginBodyState extends State<LoginBody> {
               ),
               const Text(
                 "Login",
-                style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
+                style: TextStyle(
+                  fontSize: 32,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
               const SizedBox(
                 height: 8,
               ),
               const Text(
                 "Please login to your account",
-                style: TextStyle(fontSize: 14, color: Colors.grey),
+                style: TextStyle(
+                  fontSize: 14,
+                  color: Colors.grey,
+                ),
               ),
               const SizedBox(
                 height: 18,
@@ -86,14 +111,15 @@ class _LoginBodyState extends State<LoginBody> {
                 child: CustomTextField(
                   onFieldSubmitted: (p0) {},
                   icon: IconButton(
-                      onPressed: () {
-                        setState(() {
-                          visible = !visible;
-                        });
-                      },
-                      icon: !visible
-                          ? const Icon(Icons.remove_red_eye)
-                          : const Icon(Icons.visibility_off)),
+                    onPressed: () {
+                      setState(() {
+                        visible = !visible;
+                      });
+                    },
+                    icon: !visible
+                        ? const Icon(Icons.remove_red_eye)
+                        : const Icon(Icons.visibility_off),
+                  ),
                   textInputAction: TextInputAction.done,
                   obscureText: visible,
                   keyboardType: TextInputType.text,
@@ -116,20 +142,27 @@ class _LoginBodyState extends State<LoginBody> {
                 children: [
                   const Text(
                     "Don't have an account? ",
-                    style: TextStyle(color: Colors.grey, fontSize: 12),
+                    style: TextStyle(
+                      color: Colors.grey,
+                      fontSize: 12,
+                    ),
                   ),
                   GestureDetector(
                     onTap: () {
                       Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const RegisterView(),
-                          ));
+                        context,
+                        CustomAuthRoute(
+                          page: const RegisterView(),
+                          transitionDuration: const Duration(seconds: 1),
+                        ),
+                      );
                     },
                     child: const Text(
                       "Register",
                       style: TextStyle(
-                          color: kPrimaryColor, fontWeight: FontWeight.bold),
+                        color: kPrimaryColor,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
                 ],
